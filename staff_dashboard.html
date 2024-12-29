@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Library Management</title>
+    <link rel="stylesheet" href="staff_dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h2>Welcome, Staff</h2>
+            <nav>
+                <a href="logout.php">Logout</a>
+            </nav>
+        </header>
+
+        <!-- Add New Book Section -->
+        <section class="add-book">
+            <h3>Add New Book</h3>
+            <form action="staff_dashboard.php" method="POST">
+                <label for="title">Book Title</label>
+                <input type="text" name="title" id="title" required>
+                
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author" required>
+                
+                <label for="available_copies">Number of Copies</label>
+                <input type="number" name="available_copies" id="available_copies" required>
+
+                <button type="submit" name="add_book">Add Book</button>
+            </form>
+        </section>
+
+        <!-- Issue Book Section -->
+        <!-- Issue Book Section -->
+<section class="issue-book">
+    <h3>Issue Book</h3>
+    <form action="issue_book.php" method="POST">
+        <label for="student_usn">Student USN</label>
+        <input type="text" name="student_usn" id="student_usn" required>
+        
+        <label for="book_title">Book Title</label>
+        <input type="text" name="book_title" id="book_title" required>
+
+        <button type="submit" name="issue_book">Issue Book</button>
+    </form>
+</section>
+
+
+        <!-- Transaction History Section -->
+        <section class="transactions">
+            <h3>Transactions (Books Borrowed)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Student USN</th>
+                        <th>Book Title</th>
+                        <th>Issue Date</th>
+                        <th>Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    include 'db_connection.php';
+                    $result = $conn->query("SELECT * FROM transactions");
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>{$row['transaction_id']}</td>
+                                <td>{$row['student_usn']}</td>
+                                <td>{$row['book_title']}</td>
+                                <td>{$row['issue_date']}</td>
+                                <td>{$row['return_date']}</td>
+                              </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>
